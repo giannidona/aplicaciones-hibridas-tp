@@ -24,3 +24,24 @@ export async function deleteBrand(id) {
 export async function getProductsByBrand(brandId) {
   return await db.collection("products").find({ brandId }).toArray();
 }
+
+export async function attachBrandNames(products) {
+  const brandIds = products.map((p) => p.brandId);
+
+  const uniqueBrandIds = [...new Set(brandIds)];
+
+  const brands = await db
+    .collection("brands")
+    .find({ _id: { $in: uniqueBrandIds } })
+    .toArray();
+
+  const brandMap = {};
+  for (const brand of brands) {
+    brandMap[brand._id] = brand.name;
+  }
+
+  return products.map((p) => ({
+    ...p,
+    brandName: brandMap[p.brandId] || null,
+  }));
+}
