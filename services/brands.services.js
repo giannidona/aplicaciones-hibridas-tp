@@ -45,3 +45,7 @@ export async function attachBrandNames(products) {
     brandName: brandMap[p.brandId] || null,
   }));
 }
+
+export async function getBrandById(id) {
+  return await db.collection("brands").findOne({ _id: id });
+}

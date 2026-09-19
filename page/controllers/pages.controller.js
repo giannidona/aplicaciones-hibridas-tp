@@ -4,6 +4,9 @@ import {
   getCategoryById,
   getProductsByCategoryWithBrand,
 } from "../../services/categories.services.js";
+import { renderProductDetail } from "../utils.js";
+import { getProductById } from "../../services/products.services.js";
+import { getBrandById } from "../../services/brands.services.js";
 
 export async function renderHome(req, res) {
   try {
@@ -29,6 +32,23 @@ export async function renderCategoryPage(req, res) {
       category.name,
       renderProductGrid(category.name, products),
     );
+    res.status(200).send(html);
+  } catch (error) {
+    res.status(500).send("Error: " + error.message);
+  }
+}
+
+export async function renderProductPage(req, res) {
+  try {
+    const { id } = req.params;
+    const product = await getProductById(id);
+
+    if (!product) {
+      return res.status(404).send("Producto no encontrado");
+    }
+
+    const brand = await getBrandById(product.brandId);
+    const html = createPage(product.name, renderProductDetail(product, brand));
     res.status(200).send(html);
   } catch (error) {
     res.status(500).send("Error: " + error.message);
