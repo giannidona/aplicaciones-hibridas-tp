@@ -1,8 +1,12 @@
-import db from "../../db/connection.js";
 import * as brandServices from "../../services/brands.services.js";
 
-export async function getBrands() {
-  return await db.collection("brands").find({}).toArray();
+export async function getBrands(req, res) {
+  try {
+    const brands = await brandServices.getBrands();
+    res.status(200).json(brands);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 }
 
 export async function saveBrand(req, res) {
