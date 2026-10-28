@@ -9,12 +9,23 @@ export async function getBrands(req, res) {
   }
 }
 
+export async function getBrandById(req, res) {
+  try {
+    const id = req.params.id;
+    const brand = await brandServices.getBrandById(id);
+    if (!brand) return res.status(404).json({ message: "Marca no encontrada" });
+    res.status(200).json(brand);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
 export async function saveBrand(req, res) {
   try {
     const brand = await brandServices.saveBrand(req.body);
     res.status(201).json(brand);
   } catch (error) {
-    res.status(500).json({ message: error });
+    res.status(400).json({ message: error.message });
   }
 }
 
@@ -24,7 +35,7 @@ export async function editBrand(req, res) {
     const brand = await brandServices.editBrand(id, req.body);
     res.status(202).json(brand);
   } catch (error) {
-    res.status(500).json({ message: error });
+    res.status(500).json({ message: error.message });
   }
 }
 
@@ -32,9 +43,9 @@ export async function deleteBrand(req, res) {
   try {
     const id = req.params.id;
     await brandServices.deleteBrand(id);
-    res.status(202).json({ message: "Marca eliminado" });
+    res.status(202).json({ message: "Marca eliminada" });
   } catch (error) {
-    res.status(500).json({ message: error });
+    res.status(500).json({ message: error.message });
   }
 }
 

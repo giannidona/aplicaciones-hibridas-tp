@@ -38,10 +38,7 @@ const router = createBrowserRouter([
         path: "/productos",
         element: (
           <Suspense fallback={<div>Cargando...</div>}>
-            <ProtectedRoute
-              element={<Productos />}
-              rol={["customer", "admin"]}
-            />
+            <Productos />
           </Suspense>
         ),
       },
@@ -49,10 +46,7 @@ const router = createBrowserRouter([
         path: "/productos/:id",
         element: (
           <Suspense fallback={<div>Cargando...</div>}>
-            <ProtectedRoute
-              element={<ProductoDetalle />}
-              rol={["customer", "admin"]}
-            />
+            <ProductoDetalle />
           </Suspense>
         ),
       },

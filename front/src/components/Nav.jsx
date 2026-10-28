@@ -10,7 +10,7 @@ export default function Nav() {
       </Link>
       <div className="flex gap-4 text-sm">
         <Link to="/">Inicio</Link>
-        {usuario && <Link to="/productos">Productos</Link>}
+        <Link to="/productos">Productos</Link>
         {usuario?.rol === "admin" && (
           <Link to="/nuevo-producto">Nuevo producto</Link>
         )}
