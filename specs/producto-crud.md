@@ -17,7 +17,7 @@
 | # | Nombre | Qué agrega | Estado |
 |---|---|---|---|
 | E1 | Crear producto | Formulario en `NuevoProducto.jsx` con `react-hook-form` que arma el `POST /api/products` y redirige a `/productos` al guardar | entregada |
-| E2 | Editar producto | Formulario en `EditarProducto.jsx` que precarga `GET /products/:id` y hace `PUT /api/products/:id` | pendiente |
+| E2 | Editar producto | Formulario en `EditarProducto.jsx` que precarga `GET /products/:id` y hace `PUT /api/products/:id` | entregada |
 
 ## Casos a verificar por entrega
 
