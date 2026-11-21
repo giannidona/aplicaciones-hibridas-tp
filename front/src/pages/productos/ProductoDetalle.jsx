@@ -8,22 +8,19 @@ export default function ProductoDetalle() {
   const navigate = useNavigate()
 
   const [producto, setProducto] = useState(null)
-  const [brand, setBrand] = useState(null)
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState('')
 
   const usuario = useUsuario()
   const esAdmin = usuario?.rol === 'admin'
 
+  // El backend ya resuelve la marca con un $lookup (ver products.services.js),
+  // asi que con una sola llamada alcanza: producto.brand viene adentro del
+  // mismo documento, no hace falta un segundo fetch a /brands/:id.
   useEffect(() => {
     setCargando(true)
     call(`/products/${id}`)
-      .then((data) => {
-        setProducto(data)
-        if (data.brandId) {
-          return call(`/brands/${data.brandId}`).then(setBrand)
-        }
-      })
+      .then(setProducto)
       .catch((err) => setError(err.message))
       .finally(() => setCargando(false))
   }, [id])
@@ -54,8 +51,8 @@ export default function ProductoDetalle() {
         />
 
         <div className="min-w-[250px] flex-1">
-          {brand && (
-            <p className="text-xs font-semibold uppercase text-[#a06cd5]">{brand.name}</p>
+          {producto.brand && (
+            <p className="text-xs font-semibold uppercase text-[#a06cd5]">{producto.brand.name}</p>
           )}
           <h1 className="mt-1 text-2xl font-bold text-[#1f1a2e]">{producto.name}</h1>
           <p className="mt-3 text-gray-600">{producto.description}</p>
