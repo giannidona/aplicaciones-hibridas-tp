@@ -1,21 +1,51 @@
 import db from "../db/connection.js";
 
-export async function getProducts(filters = {}) {
-  const filter = {};
+// Escapa caracteres especiales de regex para que una busqueda como
+// "crema (facial)" no rompa el $regex de Mongo.
+function escaparRegex(texto) {
+  return texto.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
 
-  if (filters?.categoryId) filter.categoryId = filters.categoryId;
-  if (filters?.brandId) filter.brandId = filters.brandId;
+export async function getProducts(filters = {}) {
+  const match = {};
+
+  if (filters?.categoryId) match.categoryId = filters.categoryId;
+  if (filters?.brandId) match.brandId = filters.brandId;
 
   if (filters?.isFeatured !== undefined)
-    filter.isFeatured = filters.isFeatured === "true";
+    match.isFeatured = filters.isFeatured === "true";
 
   if (filters?.price_min || filters?.price_max) {
-    filter.price = {};
-    if (filters?.price_min) filter.price.$gte = parseFloat(filters.price_min);
-    if (filters?.price_max) filter.price.$lte = parseFloat(filters.price_max);
+    match.price = {};
+    if (filters?.price_min) match.price.$gte = parseFloat(filters.price_min);
+    if (filters?.price_max) match.price.$lte = parseFloat(filters.price_max);
   }
 
-  return await db.collection("products").find(filter).toArray();
+  const pipeline = [];
+  if (Object.keys(match).length) pipeline.push({ $match: match });
+
+  // El $lookup trae la marca embebida para poder buscar por su nombre
+  // ademas del nombre del producto, en la misma consulta a la base.
+  pipeline.push(
+    {
+      $lookup: {
+        from: "brands",
+        localField: "brandId",
+        foreignField: "_id",
+        as: "brand",
+      },
+    },
+    { $unwind: { path: "$brand", preserveNullAndEmptyArrays: true } },
+  );
+
+  if (filters?.search) {
+    const regex = new RegExp(escaparRegex(filters.search), "i");
+    pipeline.push({
+      $match: { $or: [{ name: regex }, { "brand.name": regex }] },
+    });
+  }
+
+  return await db.collection("products").aggregate(pipeline).toArray();
 }
 
 import { randomUUID } from "crypto";
