@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router";
 import { call } from "../../services/api.service";
+import { useLogin } from "../../context/session.context";
 
 export default function Login() {
   const navigate = useNavigate();
+  const login = useLogin();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,7 +18,7 @@ export default function Login() {
 
     try {
       const usuario = await call("/login", "POST", { email, password });
-      localStorage.setItem("usuario", JSON.stringify(usuario));
+      login(usuario);
       navigate("/productos");
     } catch (err) {
       setError(err.message);

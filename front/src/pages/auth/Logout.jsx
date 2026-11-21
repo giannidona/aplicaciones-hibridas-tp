@@ -1,6 +1,8 @@
 import { Navigate } from 'react-router'
+import { useLogout } from '../../context/session.context'
 
 export default function Logout() {
-  localStorage.removeItem('usuario')
+  const logout = useLogout()
+  logout()
   return <Navigate to="/login" />
 }

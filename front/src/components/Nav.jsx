@@ -1,7 +1,8 @@
 import { Link } from "react-router";
+import { useUsuario } from "../context/session.context";
 
 export default function Nav() {
-  const usuario = JSON.parse(localStorage.getItem("usuario"));
+  const usuario = useUsuario();
 
   return (
     <nav className="flex items-center justify-between bg-[#1f1a2e] px-6 py-4 text-white">

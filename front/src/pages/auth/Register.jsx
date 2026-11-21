@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { usersSchema } from "../../schemas/user.schema";
+import { usersSchema } from "../../schemas/users.schema";
 import { call } from "../../services/api.service";
 
 export default function Register() {

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router'
 import { call } from '../../services/api.service'
+import { useUsuario } from '../../context/session.context'
 
 export default function ProductoDetalle() {
   const { id } = useParams()
@@ -11,7 +12,7 @@ export default function ProductoDetalle() {
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState('')
 
-  const usuario = JSON.parse(localStorage.getItem('usuario'))
+  const usuario = useUsuario()
   const esAdmin = usuario?.rol === 'admin'
 
   useEffect(() => {
