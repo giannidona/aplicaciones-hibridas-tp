@@ -32,7 +32,7 @@ compartir o recargar sin perderlo).
 |---|---|---|---|
 | E1 | Filtro por categoría | `<select>` de categorías en `Productos.jsx`, sincronizado con `?categoryId=` en la URL vía `useSearchParams`; re-fetch al cambiar | entregada |
 | E2 | Búsqueda por texto | Filtro `search` en `back/services/products.services.js`, ahora vía aggregate con `$lookup` a `brands` para matchear por `name` del producto **o** nombre de marca (`$or`); input de texto en `Productos.jsx` sincronizado con `?search=`, filtra en vivo (sin Enter) con debounce de 400ms | entregada |
-| E3 | Home | Sección de productos destacados (`GET /products?isFeatured=true`) y accesos directos a categorías (`GET /categories`, cada una linkea a `/productos?categoryId=X`) | pendiente |
+| E3 | Home | Sección de productos destacados (`GET /products?isFeatured=true`) y accesos directos a categorías (`GET /categories`, cada una linkea a `/productos?categoryId=X`) | entregada |
 
 ## Casos a verificar por entrega
 
