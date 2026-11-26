@@ -1,10 +1,16 @@
 @import "tailwindcss";
 
+@theme {
+  --color-brand: #1f1a2e;
+  --color-accent: #a06cd5;
+  --font-sans: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
 :root {
   color-scheme: light;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-sans);
 }

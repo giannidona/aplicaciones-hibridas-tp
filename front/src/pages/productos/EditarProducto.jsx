@@ -68,7 +68,7 @@ export default function EditarProducto() {
 
   return (
     <div className="mx-auto mt-10 max-w-xl px-4 pb-16">
-      <h1 className="mb-6 text-2xl font-bold text-[#1f1a2e]">Editar producto</h1>
+      <h1 className="mb-6 text-2xl font-bold text-brand">Editar producto</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div>
@@ -78,7 +78,7 @@ export default function EditarProducto() {
           <input
             id="name"
             {...register("name", { required: "El nombre es obligatorio" })}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-[#a06cd5]"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-accent"
           />
           {errors.name && (
             <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
@@ -93,7 +93,7 @@ export default function EditarProducto() {
             id="description"
             rows={3}
             {...register("description", { required: "La descripción es obligatoria" })}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-[#a06cd5]"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-accent"
           />
           {errors.description && (
             <p className="mt-1 text-sm text-red-600">{errors.description.message}</p>
@@ -113,7 +113,7 @@ export default function EditarProducto() {
                 required: "El precio es obligatorio",
                 min: { value: 0, message: "Tiene que ser mayor o igual a 0" },
               })}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-[#a06cd5]"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-accent"
             />
             {errors.price && (
               <p className="mt-1 text-sm text-red-600">{errors.price.message}</p>
@@ -131,7 +131,7 @@ export default function EditarProducto() {
                 required: "El stock es obligatorio",
                 min: { value: 0, message: "Tiene que ser mayor o igual a 0" },
               })}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-[#a06cd5]"
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-accent"
             />
             {errors.stock && (
               <p className="mt-1 text-sm text-red-600">{errors.stock.message}</p>
@@ -146,7 +146,7 @@ export default function EditarProducto() {
           <select
             id="brandId"
             {...register("brandId")}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-[#a06cd5]"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-accent"
           >
             <option value="">Sin marca</option>
             {marcas.map((m) => (
@@ -164,7 +164,7 @@ export default function EditarProducto() {
           <select
             id="categoryId"
             {...register("categoryId", { required: "Elegí una categoría" })}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-[#a06cd5]"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-accent"
           >
             <option value="">Elegí una categoría</option>
             {categorias.map((c) => (
@@ -186,7 +186,7 @@ export default function EditarProducto() {
             id="imageUrl"
             {...register("imageUrl")}
             placeholder="https://..."
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-[#a06cd5]"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-accent"
           />
         </div>
 
@@ -201,7 +201,7 @@ export default function EditarProducto() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="rounded-lg bg-[#1f1a2e] px-4 py-2 font-medium text-white disabled:opacity-50"
+            className="rounded-lg bg-brand px-4 py-2 font-medium text-white disabled:opacity-50"
           >
             {isSubmitting ? "Guardando..." : "Guardar cambios"}
           </button>

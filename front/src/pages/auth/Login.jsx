@@ -29,7 +29,7 @@ export default function Login() {
 
   return (
     <div className="mx-auto mt-16 max-w-sm px-4">
-      <h1 className="mb-6 text-2xl font-bold text-[#1f1a2e]">Ingresar</h1>
+      <h1 className="mb-6 text-2xl font-bold text-brand">Ingresar</h1>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div>
@@ -42,7 +42,7 @@ export default function Login() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-[#a06cd5]"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-accent"
           />
         </div>
 
@@ -56,7 +56,7 @@ export default function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-[#a06cd5]"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-accent"
           />
         </div>
 
@@ -65,7 +65,7 @@ export default function Login() {
         <button
           type="submit"
           disabled={cargando}
-          className="rounded-lg bg-[#1f1a2e] py-2 font-medium text-white disabled:opacity-50"
+          className="rounded-lg bg-brand py-2 font-medium text-white disabled:opacity-50"
         >
           {cargando ? "Ingresando..." : "Ingresar"}
         </button>
@@ -73,7 +73,7 @@ export default function Login() {
 
       <p className="mt-4 text-sm text-gray-600">
         ¿No tenés cuenta?{" "}
-        <Link to="/registro" className="text-[#a06cd5]">
+        <Link to="/registro" className="text-accent">
           Registrate
         </Link>
       </p>

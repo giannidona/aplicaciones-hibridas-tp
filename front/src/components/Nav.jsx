@@ -5,7 +5,7 @@ export default function Nav() {
   const usuario = useUsuario();
 
   return (
-    <nav className="flex items-center justify-between bg-[#1f1a2e] px-6 py-4 text-white">
+    <nav className="flex items-center justify-between bg-brand px-6 py-4 text-white">
       <Link to="/" className="text-xl font-bold">
         Sadona
       </Link>

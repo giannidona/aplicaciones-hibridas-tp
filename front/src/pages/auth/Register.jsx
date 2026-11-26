@@ -23,7 +23,7 @@ export default function Register() {
 
   return (
     <div className="mx-auto mt-16 max-w-sm px-4">
-      <h1 className="mb-6 text-2xl font-bold text-[#1f1a2e]">Crear cuenta</h1>
+      <h1 className="mb-6 text-2xl font-bold text-brand">Crear cuenta</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div>
@@ -33,7 +33,7 @@ export default function Register() {
           <input
             id="name"
             {...register("name")}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-[#a06cd5]"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-accent"
           />
           {errors.name && (
             <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
@@ -48,7 +48,7 @@ export default function Register() {
             id="email"
             type="email"
             {...register("email")}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-[#a06cd5]"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-accent"
           />
           {errors.email && (
             <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
@@ -63,7 +63,7 @@ export default function Register() {
             id="password"
             type="password"
             {...register("password")}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-[#a06cd5]"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-accent"
           />
           {errors.password && (
             <p className="mt-1 text-sm text-red-600">
@@ -83,7 +83,7 @@ export default function Register() {
             id="confirmPassword"
             type="password"
             {...register("confirmPassword")}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-[#a06cd5]"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-accent"
           />
           {errors.confirmPassword && (
             <p className="mt-1 text-sm text-red-600">
@@ -95,7 +95,7 @@ export default function Register() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="rounded-lg bg-[#1f1a2e] py-2 font-medium text-white disabled:opacity-50"
+          className="rounded-lg bg-brand py-2 font-medium text-white disabled:opacity-50"
         >
           {isSubmitting ? "Creando..." : "Crear cuenta"}
         </button>
@@ -103,7 +103,7 @@ export default function Register() {
 
       <p className="mt-4 text-sm text-gray-600">
         ¿Ya tenés cuenta?{" "}
-        <Link to="/login" className="text-[#a06cd5]">
+        <Link to="/login" className="text-accent">
           Ingresá
         </Link>
       </p>

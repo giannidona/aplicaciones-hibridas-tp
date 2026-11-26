@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router";
+import { useSearchParams } from "react-router";
 import { call } from "../../services/api.service";
 import { useUsuario } from "../../context/session.context";
+import ProductCard from "../../components/ProductCard";
 
 export default function Productos() {
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryId = searchParams.get("categoryId") || "";
   const search = searchParams.get("search") || "";
+  const sort = searchParams.get("sort") || "";
 
   const [inputBusqueda, setInputBusqueda] = useState(search);
   const [productos, setProductos] = useState([]);
@@ -47,16 +49,21 @@ export default function Productos() {
     const params = new URLSearchParams();
     if (categoryId) params.set("categoryId", categoryId);
     if (search) params.set("search", search);
+    if (sort) params.set("sort", sort);
     const query = params.toString() ? `?${params.toString()}` : "";
 
     call(`/products${query}`)
       .then((data) => setProductos(data))
       .catch((err) => setError(err.message))
       .finally(() => setCargando(false));
-  }, [categoryId, search]);
+  }, [categoryId, search, sort]);
 
   const handleCategoriaChange = (value) => {
     updateParams({ categoryId: value });
+  };
+
+  const handleOrdenChange = (e) => {
+    updateParams({ sort: e.target.value });
   };
 
   const handleEliminar = async (id) => {
@@ -74,16 +81,41 @@ export default function Productos() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold text-[#1f1a2e]">Productos</h1>
+      <div className="mb-6 flex flex-col gap-4">
+        <h1 className="text-2xl font-bold text-brand">Productos</h1>
 
-        <input
-          type="text"
-          value={inputBusqueda}
-          onChange={(e) => setInputBusqueda(e.target.value)}
-          placeholder="Buscar productos..."
-          className="w-full max-w-xs rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-[#a06cd5]"
-        />
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="relative flex-1 sm:max-w-sm">
+            <svg
+              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1 0 6.11 6.11a7.5 7.5 0 0 0 10.54 10.54Z" />
+            </svg>
+            <input
+              type="text"
+              value={inputBusqueda}
+              onChange={(e) => setInputBusqueda(e.target.value)}
+              placeholder="Buscar productos..."
+              className="h-10 w-full rounded-lg border border-gray-300 pl-9 pr-3 text-sm outline-none focus:border-accent"
+            />
+          </div>
+
+          <select
+            value={sort}
+            onChange={handleOrdenChange}
+            className="h-10 shrink-0 rounded-lg border border-gray-300 px-3 text-sm outline-none focus:border-accent sm:w-56"
+          >
+            <option value="">Ordenar por...</option>
+            <option value="price_asc">Precio: menor a mayor</option>
+            <option value="price_desc">Precio: mayor a menor</option>
+            <option value="name_asc">Nombre: A-Z</option>
+            <option value="name_desc">Nombre: Z-A</option>
+          </select>
+        </div>
       </div>
 
       <div className="mb-6 flex gap-2 overflow-x-auto pb-2">
@@ -91,8 +123,8 @@ export default function Productos() {
           onClick={() => handleCategoriaChange("")}
           className={`shrink-0 whitespace-nowrap rounded-full border px-4 py-1.5 text-sm transition-colors ${
             categoryId === ""
-              ? "border-[#1f1a2e] bg-[#1f1a2e] text-white"
-              : "border-gray-300 text-gray-600 hover:border-[#a06cd5]"
+              ? "border-brand bg-brand text-white"
+              : "border-gray-300 text-gray-600 hover:border-accent"
           }`}
         >
           Todas
@@ -103,8 +135,8 @@ export default function Productos() {
             onClick={() => handleCategoriaChange(c._id)}
             className={`shrink-0 whitespace-nowrap rounded-full border px-4 py-1.5 text-sm transition-colors ${
               categoryId === c._id
-                ? "border-[#1f1a2e] bg-[#1f1a2e] text-white"
-                : "border-gray-300 text-gray-600 hover:border-[#a06cd5]"
+                ? "border-brand bg-brand text-white"
+                : "border-gray-300 text-gray-600 hover:border-accent"
             }`}
           >
             {c.name}
@@ -126,39 +158,12 @@ export default function Productos() {
       {!cargando && !error && productos.length > 0 && (
         <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4">
           {productos.map((p) => (
-            <div
+            <ProductCard
               key={p._id}
-              className="overflow-hidden rounded-xl bg-white shadow"
-            >
-              <Link to={`/productos/${p._id}`}>
-                <img
-                  src={p.images?.[0]?.url || ""}
-                  alt={p.name}
-                  className="h-40 w-full object-cover"
-                />
-                <div className="p-3">
-                  <h3 className="text-sm font-medium">{p.name}</h3>
-                  <p className="font-bold text-[#1f1a2e]">${p.price}</p>
-                </div>
-              </Link>
-
-              {esAdmin && (
-                <div className="flex gap-2 border-t p-2 text-xs">
-                  <Link
-                    to={`/editar-producto/${p._id}`}
-                    className="text-[#a06cd5]"
-                  >
-                    Editar
-                  </Link>
-                  <button
-                    onClick={() => handleEliminar(p._id)}
-                    className="text-red-600"
-                  >
-                    Borrar
-                  </button>
-                </div>
-              )}
-            </div>
+              producto={p}
+              esAdmin={esAdmin}
+              onEliminar={handleEliminar}
+            />
           ))}
         </div>
       )}

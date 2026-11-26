@@ -45,6 +45,16 @@ export async function getProducts(filters = {}) {
     });
   }
 
+  const ordenesValidos = {
+    price_asc: { price: 1 },
+    price_desc: { price: -1 },
+    name_asc: { name: 1 },
+    name_desc: { name: -1 },
+  };
+  if (filters?.sort && ordenesValidos[filters.sort]) {
+    pipeline.push({ $sort: ordenesValidos[filters.sort] });
+  }
+
   return await db.collection("products").aggregate(pipeline).toArray();
 }
 

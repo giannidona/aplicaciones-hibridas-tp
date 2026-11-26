@@ -51,6 +51,12 @@ compartir o recargar sin perderlo).
 - El Home muestra solo los productos con `isFeatured: true` (si no hay ninguno marcado, se avisa y se explica cómo marcar uno desde `EditarProducto.jsx`, que ya tiene el checkbox).
 - Cada categoría del Home linkea a `/productos?categoryId=X` y filtra correctamente al entrar.
 
+## Entregas agregadas después de la entrega inicial
+
+| # | Nombre | Qué agrega | Estado |
+|---|---|---|---|
+| E4 | Ordenamiento | Filtro `sort` en `back/services/products.services.js` (whitelist de opciones: `price_asc`, `price_desc`, `name_asc`, `name_desc`, aplicado como `$sort` en el aggregate), `<select>` en `Productos.jsx` sincronizado con `?sort=` en la URL | entregada |
+
 ## Nota sobre tests automáticos
 
 Igual que en `specs/producto-crud.md`: no hay test runner instalado, la
