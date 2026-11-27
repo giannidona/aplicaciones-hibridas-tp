@@ -96,6 +96,15 @@ rol `customer`. Para probar las funciones de admin hay dos opciones:
    a `"admin"` en el documento del usuario, desde el Data Explorer de
    MongoDB Atlas.
 
+Ya hay un usuario admin cargado en la base para probar directo, sin tener
+que crear uno nuevo:
+
+- **Email:** `admin@sadona.com`
+- **Contraseña:** `Admin123!`
+
+Con esa cuenta logueada aparece el link "Nuevo producto" en el nav, y los
+botones de "Editar"/"Borrar" en las cards y el detalle de cada producto.
+
 ## Metodología de trabajo
 
 Este proyecto siguió el flujo de trabajo con agentes de IA en fases
