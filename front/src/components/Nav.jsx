@@ -13,7 +13,10 @@ export default function Nav() {
         <Link to="/">Inicio</Link>
         <Link to="/productos">Productos</Link>
         {usuario?.rol === "admin" && (
-          <Link to="/nuevo-producto">Nuevo producto</Link>
+          <>
+            <Link to="/nuevo-producto">Nuevo producto</Link>
+            <Link to="/admin/usuarios">Usuarios</Link>
+          </>
         )}
         {!usuario && <Link to="/login">Login</Link>}
         {!usuario && <Link to="/registro">Registro</Link>}

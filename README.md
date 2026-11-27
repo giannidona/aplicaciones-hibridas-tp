@@ -36,12 +36,12 @@ tp/
 El backend necesita un archivo `back/.env` (no se sube al repositorio) con:
 
 ```
-MONGO_URI=mongodb+srv://admin:admin@dwn4ap.6iu10mk.mongodb.net/?appName=dwn4ap
-
-JWT_SECRET=2b3c2158e7dca0abb6ee5e9532fe4e85224816296f117054f5388eadef043009
+MONGO_URI=
+JWT_SECRET=
 ```
 
-El `.env` se entrega aparte, como pide la consigna.
+El `.env` con los valores reales se entrega aparte, como pide la consigna
+(nunca van en el README ni en ningún archivo versionado en git).
 
 ## Instalación y ejecución
 

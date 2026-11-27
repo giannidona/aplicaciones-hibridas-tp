@@ -18,6 +18,7 @@ const NuevoProducto = lazy(() => import("./pages/productos/NuevoProducto.jsx"));
 const EditarProducto = lazy(
   () => import("./pages/productos/EditarProducto.jsx"),
 );
+const Usuarios = lazy(() => import("./pages/admin/Usuarios.jsx"));
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,14 @@ const router = createBrowserRouter([
         path: "/editar-producto/:id",
         element: (
           <ProtectedRoute element={<EditarProducto />} rol={["admin"]} />
+        ),
+      },
+      {
+        path: "/admin/usuarios",
+        element: (
+          <Suspense fallback={<div>Cargando...</div>}>
+            <ProtectedRoute element={<Usuarios />} rol={["admin"]} />
+          </Suspense>
         ),
       },
       { path: "*", element: <div>404 — página no encontrada</div> },

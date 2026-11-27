@@ -41,3 +41,13 @@ export async function login({ email, password }) {
 
   return { email: user.email, name: user.name, rol: user.rol, token };
 }
+
+export async function updateUserRol(id, rol) {
+  await db.collection("users").updateOne({ _id: id }, { $set: { rol } });
+  return { _id: id, rol };
+}
+
+export async function deleteUser(id) {
+  await db.collection("users").deleteOne({ _id: id });
+  return id;
+}

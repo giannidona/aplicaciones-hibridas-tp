@@ -11,10 +11,10 @@ export default function Home() {
   useEffect(() => {
     Promise.all([
       call("/categories").catch(() => []),
-      call("/products?isFeatured=true").catch(() => []),
+      call("/products?isFeatured=true&limit=8").catch(() => ({ items: [] })),
     ]).then(([categoriesData, featuredData]) => {
       setCategorias(categoriesData);
-      setDestacados(featuredData);
+      setDestacados(featuredData.items ?? []);
       setCargando(false);
     });
   }, []);

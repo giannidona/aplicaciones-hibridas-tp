@@ -55,7 +55,32 @@ export async function getProducts(filters = {}) {
     pipeline.push({ $sort: ordenesValidos[filters.sort] });
   }
 
-  return await db.collection("products").aggregate(pipeline).toArray();
+  // Paginado: $facet corre dos sub-pipelines en paralelo sobre el mismo
+  // resultado parcial - uno recorta la pagina pedida (skip/limit) y el
+  // otro cuenta el total, sin tener que consultar la coleccion dos veces.
+  const page = Math.max(parseInt(filters?.page) || 1, 1);
+  const limit = Math.max(parseInt(filters?.limit) || 12, 1);
+
+  pipeline.push({
+    $facet: {
+      items: [{ $skip: (page - 1) * limit }, { $limit: limit }],
+      totalCount: [{ $count: "count" }],
+    },
+  });
+
+  const [resultado] = await db
+    .collection("products")
+    .aggregate(pipeline)
+    .toArray();
+
+  const total = resultado?.totalCount?.[0]?.count ?? 0;
+
+  return {
+    items: resultado?.items ?? [],
+    total,
+    page,
+    totalPages: Math.max(Math.ceil(total / limit), 1),
+  };
 }
 
 import { randomUUID } from "crypto";
