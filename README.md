@@ -36,9 +36,9 @@ tp/
 El backend necesita un archivo `back/.env` (no se sube al repositorio) con:
 
 ```
-MONGO_URI=<connection string de tu cluster de MongoDB Atlas>
-JWT_SECRET=<una clave aleatoria larga, por ejemplo generada con:
-node -e "console.log(require('crypto').randomBytes(32).toString('hex'))">
+MONGO_URI=mongodb+srv://admin:admin@dwn4ap.6iu10mk.mongodb.net/?appName=dwn4ap
+
+JWT_SECRET=2b3c2158e7dca0abb6ee5e9532fe4e85224816296f117054f5388eadef043009
 ```
 
 El `.env` se entrega aparte, como pide la consigna.
